@@ -15,6 +15,8 @@ module risc_test();
     initial
     begin
     for (k=0; k<31; k = k+1) mips2.regb[k] <= k;
+        
+    // Program instructions    
     mips2.mem[0] <= 32'h8420000a; // r1 = r0 + 10
     mips2.mem[1] <= 32'h8440001e; // r2 = r0 + 30
     mips2.mem[2] <= 32'h1ff77800; // dummy
