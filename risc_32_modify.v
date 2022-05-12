@@ -13,6 +13,7 @@ module risc_32_modify (temp_st, clk, clk1);
     reg halted;
     integer del, temp1;
     
+    // Opcodes
     parameter add = 6'b000000, sub = 6'b000001, mul = 6'b000010, div = 6'b000011, andr = 6'b000101, orr = 6'b000110, lsft = 6'b000100, addi = 6'b100001, subi = 6'b100010, muli = 6'b100011, divi = 6'b100100, andi = 6'b100101, ori = 6'b100110, halt = 6'b111111;
     parameter lw = 6'b110000, sw = 6'b110001;
     parameter rr_type = 2'b00, rm_type = 2'b01, ls_type = 2'b10;
@@ -36,7 +37,7 @@ module risc_32_modify (temp_st, clk, clk1);
         end             
     
     
-    
+    // Thermal interrupts for dynamic frequency scaling
     always @(temp_st)
     begin
         case(temp_st)
@@ -122,27 +123,8 @@ module risc_32_modify (temp_st, clk, clk1);
         ex_mem_opcd <= id_ex_opcd;
         end
         
-    //MEMORY STORAGE
-    //always @(posedge clk1)
-    //    begin
-    //    if(halted == 0)
-    //        begin
-    //        mem_rb_ir <= ex_mem_ir;
-    //        mem_rb_type <= ex_mem_type;
-    //        if(ex_mem_opcd == lw) mem_rb_aluout <= datamem[ex_mem_aluout];
-    //        else if(ex_mem_opcd == sw) datamem[ex_mem_aluout] <= regb[ex_mem_ir[25:21]];
-    //        else mem_rb_aluout <= ex_mem_aluout;
-    //        end
-    //    end
-        
-    //WRITE BACK
-    //always @(posedge clk1)
-    //    begin
-    //    if(halted == 0)
-    //        if(mem_rb_ir[31:26] != 6'b110001)
-    //        regb[mem_rb_ir[25:21]] <= mem_rb_aluout;
-    //    end
-    
+   
+    // Flexible pipelining
     
     // MEM / WB
     always @(posedge clk1)
